@@ -12,8 +12,10 @@ VerticeP crear_vertice(u64 nombre) {
     return new;
 }
 
-VerticeP destruir_vertice(VerticeP vertice) {
-    assert(vertice);
+void *destruir_vertice(void *ptr) {
+    assert(ptr);
+    
+    VerticeP vertice = (VerticeP)ptr;
     
     if(vertice->vecinos_forward) {
         vertice->vecinos_forward = list_destroy(vertice->vecinos_forward, &destruir_lado);

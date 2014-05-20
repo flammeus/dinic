@@ -13,5 +13,7 @@ int main(void) {
         lado = LeerUnLado();
     }
     
+    DestruirDovahkiin(dragon);
+    
     return 1;
 }

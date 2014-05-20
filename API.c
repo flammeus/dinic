@@ -18,6 +18,19 @@ DovahkiinP NuevoDovahkiin() {
     
 }
 
+int DestruirDovahkiin(DovahkiinP D) {
+    assert(D);
+    
+    if(D->data) {
+        D->data = list_destroy(D->data, &destruir_vertice);
+    }
+    if(D->temp) {
+        free(D->temp);
+    }
+    free(D);
+    
+    return 1;
+}
 uint64_t atoi64(char *s) {
     /*
         No se checkea si hay overflow !!!
@@ -68,11 +81,8 @@ int CargarUnLado(DovahkiinP D, LadoP L) {
     assert(D);
     assert(L);
     
-    bool (*puntero_funcion)(void *, void *);
-    puntero_funcion = &comparar_vertice;
-    
-    VerticeP x = (VerticeP)list_search(D->data, (void *)(L->x), puntero_funcion);
-    VerticeP y = (VerticeP)list_search(D->data, (void *)(L->y), puntero_funcion);
+    VerticeP x = (VerticeP)list_search(D->data, (void *)(L->x), &comparar_vertice);
+    VerticeP y = (VerticeP)list_search(D->data, (void *)(L->y), &comparar_vertice);
     if(x == NULL) {
         x = L->x;
         D->data = list_add(D->data, x);
