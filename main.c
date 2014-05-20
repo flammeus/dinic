@@ -1,12 +1,17 @@
 #include "API.h"
 
 int main(void) {
+
     DovahkiinP dragon = NULL;
-    LadoP lado = NULL;
+    Lado lado;
     
     dragon = NuevoDovahkiin();
-    lado = &(LeerUnLado());
-    CargarUnLado(dragon, lado);
+    lado = LeerUnLado();
+    
+    while(lado != LadoNulo) {
+        CargarUnLado(dragon, lado);
+        lado = LeerUnLado();
+    }
     
     return 1;
 }

@@ -43,9 +43,8 @@ Lado LeerUnLado() {
     VerticeP x = NULL;
     VerticeP y = NULL;
     LadoP new = NULL;
-    FILE *text = fopen("text", "r");//à virer si stdin
     
-    if(fgets(buffer, MAX_SIZE, text) != NULL) {
+    if(fgets(buffer, MAX_SIZE, stdin) != NULL) {
         tokenx = strtok(buffer, " ");
         tokeny = strtok(NULL, " ");
         tokenc = strtok(NULL, "\n");
@@ -62,8 +61,7 @@ Lado LeerUnLado() {
             free(buffer);
         }
     }
-    fclose(text);//à virer aussi si stdin
-    return *new;
+    return new;
 }
 
 int CargarUnLado(DovahkiinP D, LadoP L) {

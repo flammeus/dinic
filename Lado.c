@@ -7,6 +7,7 @@ LadoP crear_lado(VerticeP x, VerticeP y, u64 c) {
 
     LadoP new = calloc(1, sizeof(struct Lado));
     if(new) {
+        new->es_nulo = false;
         new->x = x;
         new->y = y;
         new->c = c;
