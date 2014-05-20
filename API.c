@@ -14,8 +14,8 @@ DovahkiinP NuevoDovahkiin() {
         new->data = list_create();
         new->temp = list_create();
     }
-    return new;
     
+    return new;
 }
 
 int DestruirDovahkiin(DovahkiinP D) {
@@ -31,7 +31,54 @@ int DestruirDovahkiin(DovahkiinP D) {
     
     return 1;
 }
-uint64_t atoi64(char *s) {
+
+void FijarFuente(DovahkiinP D, u64 x) {
+    assert(D);
+    
+    VerticeP v = crear_vertice(x);
+    VerticeP check = list_search(D->data, (void *)v, &comparar_vertice);
+    v = destruir_vertice(v);
+    
+    D->fuente = check;
+}
+
+void FijarResumidero(DovahkiinP D, u64 x) {
+    assert(D);
+    
+    VerticeP v = crear_vertice(x);
+    VerticeP check = list_search(D->data, v, &comparar_vertice);
+    v = destruir_vertice(v);
+    
+    D->resumidero = check;
+}
+
+int ImprimirFuente(DovahkiinP D) {
+    assert(D);
+    
+    int result = -1;
+    
+    if(D->fuente) {
+        printf("Fuente: %" PRIu64 "\n", D->fuente->nombre);
+        result = 0;
+    }
+    
+    return result;
+}
+
+int ImprimirResumidero(DovahkiinP D) {
+    assert(D);
+    
+    int result = -1;
+    
+    if(D->resumidero) {
+        printf("Fuente: %" PRIu64 "\n", D->resumidero->nombre);
+        result = 0;
+    }
+    
+    return result;
+}
+
+static uint64_t atoi64(char *s) {
     /*
         No se checkea si hay overflow !!!
     */
@@ -42,6 +89,7 @@ uint64_t atoi64(char *s) {
 		result = result * 10  + (c - '0');
 		c = *s++;
 	}
+	
 	return result;
 }
 
@@ -72,6 +120,7 @@ Lado LeerUnLado() {
         }
     }
     free(buffer);
+    
     return new;
 }
 
@@ -79,8 +128,8 @@ int CargarUnLado(DovahkiinP D, LadoP L) {
     assert(D);
     assert(L);
     
-    VerticeP x = (VerticeP)list_search(D->data, (void *)(L->x), &comparar_vertice);
-    VerticeP y = (VerticeP)list_search(D->data, (void *)(L->y), &comparar_vertice);
+    VerticeP x = (VerticeP)list_search(D->data, L->x, &comparar_vertice);
+    VerticeP y = (VerticeP)list_search(D->data, L->y, &comparar_vertice);
     if(x == NULL) {
         D->data = list_add(D->data, L->x);
     }
@@ -88,15 +137,27 @@ int CargarUnLado(DovahkiinP D, LadoP L) {
         L->x = destruir_vertice(L->x);
         L->x = x;
     }
-    if(list_search(D->data, (void *)(L->y), &comparar_vertice) == NULL) {
+    if(list_search(D->data, L->y, &comparar_vertice) == NULL) {
         D->data = list_add(D->data, L->y);
     }
     else {
         L->y = destruir_vertice(L->y);
         L->y = y;
     }
-    member_t new = member_create((void *)L);
+    member_t new = member_create(L);
     L->x->vecinos_forward = list_direct_add(L->x->vecinos_forward, new);
     L->y->vecinos_backward = list_direct_add(L->y->vecinos_backward, new);
+    
     return 1;
+}
+
+int Prepararse(DovahkiinP D) {
+    assert(D);
+    
+    int result = 0;
+    if(D->fuente && D->resumidero) {
+        result = 1;
+    }
+    
+    return result;
 }

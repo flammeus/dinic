@@ -12,6 +12,8 @@ int main(void) {
         CargarUnLado(dragon, lado);
         lado = LeerUnLado();
     }
+    FijarFuente(dragon, (u64)0);
+    FijarResumidero(dragon, (u64)1);
     
     DestruirDovahkiin(dragon);
     
