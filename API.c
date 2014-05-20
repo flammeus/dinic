@@ -51,7 +51,7 @@ Lado LeerUnLado() {
         y devuelve el elemento de tipo Lado que represente este lado si
         la linea es valida , o bien LadoNulo si la linea no es valida.
     */
-    char *buffer = calloc(1, sizeof(MAX_SIZE));
+    char *buffer = calloc(MAX_SIZE, sizeof(uint8_t));
     char *tokenx, *tokeny, *tokenc;
     VerticeP x = NULL;
     VerticeP y = NULL;
@@ -70,10 +70,8 @@ Lado LeerUnLado() {
             free(new);
             new = NULL;
         }
-        if(buffer != NULL) {
-            free(buffer);
-        }
     }
+    free(buffer);
     return new;
 }
 
@@ -84,14 +82,21 @@ int CargarUnLado(DovahkiinP D, LadoP L) {
     VerticeP x = (VerticeP)list_search(D->data, (void *)(L->x), &comparar_vertice);
     VerticeP y = (VerticeP)list_search(D->data, (void *)(L->y), &comparar_vertice);
     if(x == NULL) {
-        x = L->x;
-        D->data = list_add(D->data, x);
+        D->data = list_add(D->data, L->x);
     }
-    if(y == NULL) {
-        y = L->y;
-        D->data = list_add(D->data, y);
+    else {
+        L->x = destruir_vertice(L->x);
+        L->x = x;
     }
-    x->vecinos_forward = list_add(x->vecinos_forward, L);
-    y->vecinos_backward = list_add(y->vecinos_backward, L);
+    if(list_search(D->data, (void *)(L->y), &comparar_vertice) == NULL) {
+        D->data = list_add(D->data, L->y);
+    }
+    else {
+        L->y = destruir_vertice(L->y);
+        L->y = y;
+    }
+    member_t new = member_create((void *)L);
+    L->x->vecinos_forward = list_direct_add(L->x->vecinos_forward, new);
+    L->y->vecinos_backward = list_direct_add(L->y->vecinos_backward, new);
     return 1;
 }

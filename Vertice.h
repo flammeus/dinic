@@ -12,7 +12,6 @@ struct Vertice {
 
 
 VerticeP crear_vertice(u64 nombre);
-void *destruir_vertice(void *vertice);
+void *destruir_vertice(void *ptr);
 bool comparar_vertice(void *x, void *y);
-
 #endif

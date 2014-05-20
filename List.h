@@ -13,6 +13,7 @@ list_t list_destroy(list_t list, void *(*function_destroy)(void*));
 member_t member_create(void *node);
 member_t member_destroy(member_t member, void *function_destroy(void*));
 list_t list_add(list_t list, void *member);
+list_t list_direct_add(list_t list, member_t member);
 void *list_search(list_t list, void *item, bool function_compare(void*, void*));
 unsigned long list_size(list_t list);
 bool list_empty(list_t list);

@@ -16,13 +16,10 @@ void *destruir_vertice(void *ptr) {
     assert(ptr);
     
     VerticeP vertice = (VerticeP)ptr;
-    
     if(vertice->vecinos_forward) {
         vertice->vecinos_forward = list_destroy(vertice->vecinos_forward, &destruir_lado);
     }
-    if(vertice->vecinos_backward) {
-        vertice->vecinos_backward = list_destroy(vertice->vecinos_backward, &destruir_lado);
-    }
+    free(vertice->vecinos_backward);
     free(vertice);
     
     return NULL;

@@ -7,7 +7,6 @@ LadoP crear_lado(VerticeP x, VerticeP y, u64 c) {
 
     LadoP new = calloc(1, sizeof(struct Lado));
     if(new) {
-        new->es_nulo = false;
         new->x = x;
         new->y = y;
         new->c = c;
@@ -19,20 +18,8 @@ LadoP crear_lado(VerticeP x, VerticeP y, u64 c) {
 void *destruir_lado(void *ptr) {
     assert(ptr);
     
-    LadoP lado = (LadoP)ptr;
-    free(lado);
+    free(ptr);
+    ptr = NULL;
     
-    return NULL;
-}
-
-VerticeP tomar_x(LadoP lado) {
-    assert(lado);
-    
-    return lado->x;
-}
-
-VerticeP tomar_y(LadoP lado) {
-    assert(lado);
-    
-    return lado->y;
+    return ptr;
 }
