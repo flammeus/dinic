@@ -14,7 +14,7 @@ int main(void) {
     }
     FijarFuente(dragon, (u64)0);
     FijarResumidero(dragon, (u64)1);
-    
+    ActualizarDistancias(dragon);
     DestruirDovahkiin(dragon);
     
     return 1;

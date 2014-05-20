@@ -13,6 +13,7 @@ DovahkiinP NuevoDovahkiin() {
         new->flujo = 0;
         new->data = list_create();
         new->temp = list_create();
+        new->iteracion = 0;
     }
     
     return new;
@@ -36,7 +37,7 @@ void FijarFuente(DovahkiinP D, u64 x) {
     assert(D);
     
     VerticeP v = crear_vertice(x);
-    VerticeP check = list_search(D->data, (void *)v, &comparar_vertice);
+    VerticeP check = list_search(D->data, v, &comparar_vertice);
     v = destruir_vertice(v);
     
     D->fuente = check;
@@ -159,5 +160,38 @@ int Prepararse(DovahkiinP D) {
         result = 1;
     }
     
+    return result;
+}
+
+int ActualizarDistancias(DovahkiinP D) {
+    assert(D);
+
+    member_t temp = NULL;
+    member_t next = NULL;
+    int result = 0;
+    
+    D->iteracion += 1;
+    
+    if(!D->temp) {
+        D->temp = list_create();
+    }
+    
+    D->temp = list_add(D->temp, D->fuente);//Destruir member_t
+    temp = list_get_first(D->temp);
+    
+    while(temp && !comparar_vertice(get_content(temp), D->resumidero)) {
+        D->temp = add_neighboor_to_list(D->temp, get_content(temp), D->iteracion);
+        temp = list_next(temp);
+    }
+    if(comparar_vertice(get_content(temp), D->resumidero)) {
+        result = 1;
+    }
+    
+    temp = list_get_first(D->temp);
+    while(temp) {
+        next = list_next(temp);
+        free(temp);
+        temp = next;
+    }
     return result;
 }

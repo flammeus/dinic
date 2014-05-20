@@ -17,6 +17,7 @@ struct DovahkiinSt {
 	VerticeP fuente, resumidero;
 	u64 flujo;
 	list_t data, temp;
+	unsigned int iteracion;
 };
 
 DovahkiinP NuevoDovahkiin();
@@ -28,4 +29,5 @@ int ImprimirResumidero(DovahkiinP D);
 Lado LeerUnLado();
 int CargarUnLado(DovahkiinP D, LadoP L);
 int Prepararse(DovahkiinP D);
+int ActualizarDistancias(DovahkiinP D);
 #endif

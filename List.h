@@ -18,4 +18,6 @@ void *list_search(list_t list, void *item, bool function_compare(void*, void*));
 unsigned long list_size(list_t list);
 bool list_empty(list_t list);
 void *get_content(member_t member);
+member_t list_get_first(list_t list);
+member_t list_next(member_t member);
 #endif
